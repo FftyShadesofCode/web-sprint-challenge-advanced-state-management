@@ -52,11 +52,15 @@ describe("Basic Application Functioning:", ()=>{
 });
 
 describe("Validation Testing:", ()=>{
-    test('App returns a validation error when name not included', async ()=> { 
+    test('App returns a validation error when name not included', async ()=> {
         await runForm('', 'worker', 's3', 'description');
         const error = await screen.findByTestId('errorAlert');
-        
-        expect(error).toBeInTheDocument();
+
+        const nicknameTest = within(error).queryByText(/name/i);
+        const errorTest = within(error).queryByText(/error/i);
+
+        expect(nicknameTest).not.toBeNull();
+        expect(errorTest).not.toBeNull();
     });
 });
 
